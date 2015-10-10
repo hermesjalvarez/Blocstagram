@@ -79,6 +79,7 @@
 		A1AF6BD81BC9C498006D1C45 /* Blocstagram */ = {
 			isa = PBXGroup;
 			children = (
+				A1AF6C001BC9CA08006D1C45 /* Images */,
 				A1AF6BDD1BC9C498006D1C45 /* AppDelegate.h */,
 				A1AF6BDE1BC9C498006D1C45 /* AppDelegate.m */,
 				A1AF6BE01BC9C498006D1C45 /* ViewController.h */,
@@ -114,6 +115,13 @@
 				A1AF6BF41BC9C499006D1C45 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A1AF6C001BC9CA08006D1C45 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
