@@ -22,6 +22,7 @@
 		A13BD4FC1BC9E81300D36F0F /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD4FB1BC9E81300D36F0F /* Media.m */; };
 		A13BD4FF1BC9E8B400D36F0F /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD4FE1BC9E8B400D36F0F /* Comment.m */; };
 		A13BD5021BC9EA2400D36F0F /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD5011BC9EA2400D36F0F /* DataSource.m */; };
+		A13BD5051BC9F67900D36F0F /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD5041BC9F67900D36F0F /* MediaTableViewCell.m */; };
 		A1AF6BDC1BC9C498006D1C45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AF6BDB1BC9C498006D1C45 /* main.m */; };
 		A1AF6BDF1BC9C498006D1C45 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AF6BDE1BC9C498006D1C45 /* AppDelegate.m */; };
 		A1AF6BE71BC9C499006D1C45 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1AF6BE61BC9C499006D1C45 /* Images.xcassets */; };
@@ -60,6 +61,8 @@
 		A13BD4FE1BC9E8B400D36F0F /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		A13BD5001BC9EA2400D36F0F /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		A13BD5011BC9EA2400D36F0F /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		A13BD5031BC9F67900D36F0F /* MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTableViewCell.h; sourceTree = "<group>"; };
+		A13BD5041BC9F67900D36F0F /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
 		A1AF6BD61BC9C498006D1C45 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1AF6BDA1BC9C498006D1C45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1AF6BDB1BC9C498006D1C45 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -127,6 +130,8 @@
 				A13BD4FE1BC9E8B400D36F0F /* Comment.m */,
 				A13BD5001BC9EA2400D36F0F /* DataSource.h */,
 				A13BD5011BC9EA2400D36F0F /* DataSource.m */,
+				A13BD5031BC9F67900D36F0F /* MediaTableViewCell.h */,
+				A13BD5041BC9F67900D36F0F /* MediaTableViewCell.m */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 			files = (
 				A13BD4F91BC9E7A300D36F0F /* User.m in Sources */,
 				A13BD4FF1BC9E8B400D36F0F /* Comment.m in Sources */,
+				A13BD5051BC9F67900D36F0F /* MediaTableViewCell.m in Sources */,
 				A13BD4FC1BC9E81300D36F0F /* Media.m in Sources */,
 				A1AF6BDF1BC9C498006D1C45 /* AppDelegate.m in Sources */,
 				A13BD5021BC9EA2400D36F0F /* DataSource.m in Sources */,
