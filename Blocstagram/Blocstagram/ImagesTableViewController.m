@@ -9,21 +9,13 @@
 
 @implementation ImagesTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // custom initialization
-    }
-    return self;
+- (NSArray *) items {
+    return [DataSource sharedInstance].mediaItems;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // populate array with images in folder
-    //
-    
+        
     // at least one type of cell must be registered for tableview
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"imageCell"];
     
@@ -36,7 +28,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [DataSource sharedInstance].mediaItems.count;
+    return [self items].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -61,7 +53,7 @@
     }
     
     //#4
-    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    Media *item = [self items][indexPath.row];
     imageView.image = item.image;
     
     return cell;
@@ -70,7 +62,7 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // returns actual pixel height w/ right aspect ratio w/ width of phone screen
     // image_height * (screen_width / image_width) = image w/ correct aspect ratio
-    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    Media *item = [self items][indexPath.row];
     UIImage *image = item.image;
     return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
 }
