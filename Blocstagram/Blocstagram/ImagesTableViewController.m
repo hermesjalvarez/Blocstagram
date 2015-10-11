@@ -1,9 +1,7 @@
 #import "ImagesTableViewController.h"
 
-
 @interface ImagesTableViewController ()
 @end
-
 
 @implementation ImagesTableViewController
 
@@ -44,7 +42,6 @@
     return self.images.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     //#1
@@ -74,11 +71,23 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     // returns actual pixel height w/ right aspect ratio w/ width of phone screen
     // image_height * (screen_width / image_width) = image w/ correct aspect ratio
     UIImage *image = self.images[indexPath.row];
     return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.images removeObjectAtIndex:indexPath.row]; //has to come before line below. why?
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
 }
 
 @end
