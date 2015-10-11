@@ -15,12 +15,13 @@ static UIColor *usernameLabelGray;
 static UIColor *commentLabelGray;
 static UIColor *linkColor;
 static NSParagraphStyle *paragraphStyle;
+static UIColor *orangeText;
+static NSParagraphStyle *rightAlignParagraphStyle;
 
 @implementation MediaTableViewCell
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -51,6 +52,7 @@ static NSParagraphStyle *paragraphStyle;
     usernameLabelGray = [UIColor colorWithRed:0.933 green:0.933 blue:0.933 alpha:1]; /*#eeeeee*/
     commentLabelGray = [UIColor colorWithRed:0.898 green:0.898 blue:0.898 alpha:1]; /*#e5e5e5*/
     linkColor = [UIColor colorWithRed:0.345 green:0.314 blue:0.427 alpha:1]; /*#58506d*/
+    orangeText = [UIColor colorWithRed:(255/255.0) green:(69/255.0) blue:(0/255.0) alpha:1];
     
     NSMutableParagraphStyle *mutableParagraphStyle = [[NSMutableParagraphStyle alloc] init];
     mutableParagraphStyle.headIndent = 20.0;
@@ -58,10 +60,21 @@ static NSParagraphStyle *paragraphStyle;
     mutableParagraphStyle.tailIndent = -20.0;
     mutableParagraphStyle.paragraphSpacingBefore = 5;
     
+    //right align paragraph style
+    NSMutableParagraphStyle *mutableRightAlignParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+    mutableRightAlignParagraphStyle.headIndent = 20.0;
+    mutableRightAlignParagraphStyle.firstLineHeadIndent = 20.0;
+    mutableRightAlignParagraphStyle.tailIndent = -20.0;
+    mutableRightAlignParagraphStyle.paragraphSpacingBefore = 5;
+    mutableRightAlignParagraphStyle.alignment = NSTextAlignmentRight;
+    
+    rightAlignParagraphStyle = mutableRightAlignParagraphStyle;
+    
     paragraphStyle = mutableParagraphStyle;
 }
 
 - (NSAttributedString *) usernameAndCaptionString {
+    
     // #1
     CGFloat usernameFontSize = 15;
     
@@ -76,27 +89,46 @@ static NSParagraphStyle *paragraphStyle;
     [mutableUsernameAndCaptionString addAttribute:NSFontAttributeName value:[boldFont fontWithSize:usernameFontSize] range:usernameRange];
     [mutableUsernameAndCaptionString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
     
+    //change caption kerning
+    NSRange captionRange = [baseString rangeOfString:self.mediaItem.caption];
+    [mutableUsernameAndCaptionString addAttribute:NSKernAttributeName value:@3.0 range:captionRange];
+
+    
     return mutableUsernameAndCaptionString;
 }
 
 - (NSAttributedString *) commentString {
+    
     NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
+    
+    int counter = 0;
     
     for (Comment *comment in self.mediaItem.comments) {
         // Make a string that says "username comment" followed by a line break
         NSString *baseString = [NSString stringWithFormat:@"%@ %@\n", comment.from.userName, comment.text];
         
         // Make an attributed string, with the "username" bold
-        
         NSMutableAttributedString *oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : paragraphStyle}];
         
         NSRange usernameRange = [baseString rangeOfString:comment.from.userName];
         [oneCommentString addAttribute:NSFontAttributeName value:boldFont range:usernameRange];
         [oneCommentString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
         
+        if (counter==0) { //color first comment orange
+            NSRange orangeTextRange = [baseString rangeOfString:baseString];
+            [oneCommentString addAttribute:NSForegroundColorAttributeName value:orangeText range:orangeTextRange];
+        }
+        
+        if (counter%2 == 0) { //right align every other comment
+            NSRange rightAlignRange = [baseString rangeOfString:baseString];
+            [oneCommentString addAttribute:NSParagraphStyleAttributeName value:rightAlignParagraphStyle range:rightAlignRange];
+        }
+        
+        counter++;
+        
         [commentString appendAttributedString:oneCommentString];
     }
-
+    
     return commentString;
 }
 

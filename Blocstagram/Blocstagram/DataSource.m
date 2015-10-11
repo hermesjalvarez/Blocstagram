@@ -9,7 +9,6 @@
 
 @end
 
-
 @implementation DataSource
 
 + (instancetype) sharedInstance {
@@ -32,9 +31,11 @@
 }
 
 - (void) addRandomData {
+    
     NSMutableArray *randomMediaItems = [NSMutableArray array];
     
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 10; i++) { //hardcoded 10 = number of images we have
+        
         NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
         UIImage *image = [UIImage imageNamed:imageName];
         
@@ -44,12 +45,14 @@
             media.image = image;
             media.caption = [self randomSentence];
             
-            NSUInteger commentCount = arc4random_uniform(10) + 2;
+            NSUInteger commentCount = arc4random_uniform(10) + 2; //determine # of random comments
             NSMutableArray *randomComments = [NSMutableArray array];
             
             for (int i  = 0; i <= commentCount; i++) {
+                
                 Comment *randomComment = [self randomComment];
                 [randomComments addObject:randomComment];
+                
             }
             
             media.comments = randomComments;
@@ -61,7 +64,7 @@
     self.mediaItems = randomMediaItems;
 }
 
-- (User *) randomUser {
+- (User *) randomUser { //generate random username and fullname for person posting
     User *user = [[User alloc] init];
     
     user.userName = [self randomStringOfLength:arc4random_uniform(10) + 2];
@@ -73,16 +76,16 @@
     return user;
 }
 
-- (Comment *) randomComment {
+- (Comment *) randomComment { //generates random comment with a random user
     Comment *comment = [[Comment alloc] init];
     
-    comment.from = [self randomUser];
-    comment.text = [self randomSentence];
+    comment.from = [self randomUser]; //random user
+    comment.text = [self randomSentence]; //random sentence
     
     return comment;
 }
 
-- (NSString *) randomSentence {
+- (NSString *) randomSentence { //generate random sentence (used in comment and caption)
     NSUInteger wordCount = arc4random_uniform(20) + 2;
     
     NSMutableString *randomSentence = [[NSMutableString alloc] init];
@@ -95,7 +98,7 @@
     return randomSentence;
 }
 
-- (NSString *) randomStringOfLength:(NSUInteger) len {
+- (NSString *) randomStringOfLength:(NSUInteger) len { //generate random string/word
     NSString *alphabet = @"abcdefghijklmnopqrstuvwxyz";
     
     NSMutableString *s = [NSMutableString string];
