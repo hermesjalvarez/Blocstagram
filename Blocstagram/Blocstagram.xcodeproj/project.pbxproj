@@ -18,6 +18,10 @@
 		A13BD4BD1BC9CC9E00D36F0F /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4B31BC9CC9E00D36F0F /* 9.jpg */; };
 		A13BD4BE1BC9CC9E00D36F0F /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4B41BC9CC9E00D36F0F /* 10.jpg */; };
 		A13BD4C11BC9CE8600D36F0F /* ImagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD4C01BC9CE8600D36F0F /* ImagesTableViewController.m */; };
+		A13BD4F91BC9E7A300D36F0F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD4F81BC9E7A300D36F0F /* User.m */; };
+		A13BD4FC1BC9E81300D36F0F /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD4FB1BC9E81300D36F0F /* Media.m */; };
+		A13BD4FF1BC9E8B400D36F0F /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD4FE1BC9E8B400D36F0F /* Comment.m */; };
+		A13BD5021BC9EA2400D36F0F /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BD5011BC9EA2400D36F0F /* DataSource.m */; };
 		A1AF6BDC1BC9C498006D1C45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AF6BDB1BC9C498006D1C45 /* main.m */; };
 		A1AF6BDF1BC9C498006D1C45 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AF6BDE1BC9C498006D1C45 /* AppDelegate.m */; };
 		A1AF6BE71BC9C499006D1C45 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1AF6BE61BC9C499006D1C45 /* Images.xcassets */; };
@@ -48,6 +52,14 @@
 		A13BD4B41BC9CC9E00D36F0F /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
 		A13BD4BF1BC9CE8600D36F0F /* ImagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagesTableViewController.h; sourceTree = "<group>"; };
 		A13BD4C01BC9CE8600D36F0F /* ImagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagesTableViewController.m; sourceTree = "<group>"; };
+		A13BD4F71BC9E7A300D36F0F /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		A13BD4F81BC9E7A300D36F0F /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		A13BD4FA1BC9E81300D36F0F /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		A13BD4FB1BC9E81300D36F0F /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		A13BD4FD1BC9E8B400D36F0F /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		A13BD4FE1BC9E8B400D36F0F /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		A13BD5001BC9EA2400D36F0F /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		A13BD5011BC9EA2400D36F0F /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		A1AF6BD61BC9C498006D1C45 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1AF6BDA1BC9C498006D1C45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1AF6BDB1BC9C498006D1C45 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -107,6 +119,14 @@
 				A1AF6BE61BC9C499006D1C45 /* Images.xcassets */,
 				A1AF6BE81BC9C499006D1C45 /* LaunchScreen.xib */,
 				A1AF6BD91BC9C498006D1C45 /* Supporting Files */,
+				A13BD4F71BC9E7A300D36F0F /* User.h */,
+				A13BD4F81BC9E7A300D36F0F /* User.m */,
+				A13BD4FA1BC9E81300D36F0F /* Media.h */,
+				A13BD4FB1BC9E81300D36F0F /* Media.m */,
+				A13BD4FD1BC9E8B400D36F0F /* Comment.h */,
+				A13BD4FE1BC9E8B400D36F0F /* Comment.m */,
+				A13BD5001BC9EA2400D36F0F /* DataSource.h */,
+				A13BD5011BC9EA2400D36F0F /* DataSource.m */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -263,7 +283,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A13BD4F91BC9E7A300D36F0F /* User.m in Sources */,
+				A13BD4FF1BC9E8B400D36F0F /* Comment.m in Sources */,
+				A13BD4FC1BC9E81300D36F0F /* Media.m in Sources */,
 				A1AF6BDF1BC9C498006D1C45 /* AppDelegate.m in Sources */,
+				A13BD5021BC9EA2400D36F0F /* DataSource.m in Sources */,
 				A1AF6BDC1BC9C498006D1C45 /* main.m in Sources */,
 				A13BD4C11BC9CE8600D36F0F /* ImagesTableViewController.m in Sources */,
 			);
