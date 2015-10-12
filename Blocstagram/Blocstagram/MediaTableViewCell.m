@@ -9,6 +9,7 @@
 @property (nonatomic, strong) UILabel *commentLabel;
 @end
 
+// static: only one variable in memory for this, don't use memory for each cell (not properties)
 static UIFont *lightFont;
 static UIFont *boldFont;
 static UIColor *usernameLabelGray;
@@ -20,16 +21,20 @@ static NSParagraphStyle *rightAlignParagraphStyle;
 
 @implementation MediaTableViewCell
 
+// default method to control selecting cell visual display
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
 }
 
+// need to do everytime you subclass, designated initializer for tableview cell
+// not required, called by default
+// but if you have a complex cell this is where you initialize stuff, where layout is created
+// if you use Xib you do this in interface builder
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    //manually create layout
     if (self) {
-        // Initialization code
         self.mediaImageView = [[UIImageView alloc] init];
         self.usernameAndCaptionLabel = [[UILabel alloc] init];
         self.usernameAndCaptionLabel.numberOfLines = 0;
@@ -46,6 +51,12 @@ static NSParagraphStyle *rightAlignParagraphStyle;
     return self;
 }
 
+// + class method
+// static variales at top, you need to initialize those
+// called only once, populate static variables
+// do anything here that is needed once for all cells
+// if you use interface builder you don't need this
+// especially constraints
 + (void)load {
     lightFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:11];
     boldFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11];
@@ -73,10 +84,13 @@ static NSParagraphStyle *rightAlignParagraphStyle;
     paragraphStyle = mutableParagraphStyle;
 }
 
+//
 - (NSAttributedString *) usernameAndCaptionString {
     
     // #1
     CGFloat usernameFontSize = 15;
+    
+    //two step process: (1) create simple string (2) use range to style different things differently
     
     // #2 - Make a string that says "username caption"
     NSString *baseString = [NSString stringWithFormat:@"%@ %@", self.mediaItem.user.userName, self.mediaItem.caption];
@@ -99,9 +113,14 @@ static NSParagraphStyle *rightAlignParagraphStyle;
 
 - (NSAttributedString *) commentString {
     
+    //__block NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
     NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
-    
+
     int counter = 0;
+    
+//    [self.mediaItem.comments enumerateObjectsUsingBlock:^(Comment *comment, NSUInteger counter, BOOL * _Nonnull stop) {
+//        
+//    }]
     
     for (Comment *comment in self.mediaItem.comments) {
         // Make a string that says "username comment" followed by a line break

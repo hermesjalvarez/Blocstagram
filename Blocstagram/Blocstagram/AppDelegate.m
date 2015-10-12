@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import "ImagesTableViewController.h"
+#import "DataSource.h"
 
 @interface AppDelegate ()
 @end
@@ -8,13 +9,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // dependency injection, model entirely separate from controller and view
+    ImagesTableViewController *vc = [[ImagesTableViewController alloc] init];
+    vc.items = [DataSource sharedInstance].mediaItems;
     
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ImagesTableViewController alloc] init]];
+    // 3 key lines, done if you use storyboard
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]; //define main window
+    
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:vc]; //
+    
+    [self.window makeKeyAndVisible]; //key window is the default window, only one per app
     
     self.window.backgroundColor = [UIColor whiteColor];
     
-    [self.window makeKeyAndVisible];
     
     return YES;
 }
