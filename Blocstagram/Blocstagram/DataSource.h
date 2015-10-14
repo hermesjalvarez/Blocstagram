@@ -7,6 +7,8 @@
 
 +(instancetype) sharedInstance;
 
- - (void) deleteMediaItem:(Media *)item;
+- (void) deleteMediaItem:(Media *)item;
+
+- (void) moveMediaItemFirst:(Media *)item;
 
 @end
