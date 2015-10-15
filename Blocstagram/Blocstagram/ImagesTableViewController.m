@@ -10,10 +10,6 @@
 
 @implementation ImagesTableViewController
 
-//- (NSArray *) items {
-//    return [DataSource sharedInstance].mediaItems;
-//}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
