@@ -36,7 +36,13 @@
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == [DataSource sharedInstance] && [keyPath isEqualToString:@"mediaItems"]) {
-        // We know mediaItems changed.  Let's see what kind of change it is.
+
+		//	AV: avoid table view animated updates for now
+		[self.tableView reloadData];
+		return;
+
+
+		// We know mediaItems changed.  Let's see what kind of change it is.
         NSKeyValueChange kindOfChange = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
         
         if (kindOfChange == NSKeyValueChangeSetting) {
