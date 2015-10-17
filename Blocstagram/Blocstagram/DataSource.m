@@ -25,7 +25,6 @@
 - (void) populateDataWithParameters:(NSDictionary *)parameters completionHandler:(NewItemCompletionBlock)completionHandler {
     if (self.accessToken) {
         // only try to get the data if there's an access token
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             // do the network request in the background, so the UI doesn't lock up
             
@@ -57,16 +56,20 @@
                             if (completionHandler) {
                                 completionHandler(nil);
                             }
+                            
                         });
+                        
                     } else if (completionHandler) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             completionHandler(jsonError);
                         });
                     }
+                    
                 } else if (completionHandler) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         completionHandler(webError);
                     });
+                    
                 }
             }
         });
@@ -74,7 +77,6 @@
 }
 
 - (void) parseDataFromFeedDictionary:(NSDictionary *) feedDictionary fromRequestWithParameters:(NSDictionary *)parameters {
-    
     NSArray *mediaArray = feedDictionary[@"data"];
     
     NSMutableArray *tmpMediaItems = [NSMutableArray array];
@@ -84,7 +86,6 @@
         
         if (mediaItem) {
             [tmpMediaItems addObject:mediaItem];
-            //this line causes app to crash
             [self downloadImageForMediaItem:mediaItem];
         }
     }
@@ -114,10 +115,9 @@
         self.mediaItems = tmpMediaItems;
         [self didChangeValueForKey:@"mediaItems"];
     }
-    
 }
 
-//running this method causes app to crash
+//new method
 - (void) downloadImageForMediaItem:(Media *)mediaItem {
     if (mediaItem.mediaURL && !mediaItem.image) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -129,10 +129,10 @@
             
             if (imageData) {
                 UIImage *image = [UIImage imageWithData:imageData];
-                NSLog(@"first loop");
+                
                 if (image) {
                     mediaItem.image = image;
-                    NSLog(@"second loop"); //crash occurs here
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
                         NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
@@ -148,6 +148,7 @@
 
 - (void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
     if (self.isLoadingOlderItems == NO && self.thereAreNoMoreOlderMessages == NO) {
+        
         self.isLoadingOlderItems = YES;
         
         NSString *maxID = [[self.mediaItems lastObject] idNumber];
@@ -168,7 +169,6 @@
 
 - (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
     self.thereAreNoMoreOlderMessages = NO;
-    
     // #1
     if (self.isRefreshing == NO) {
         self.isRefreshing = YES;
@@ -220,6 +220,7 @@
         
         // Got a token; populate the initial data
         [self populateDataWithParameters:nil completionHandler:nil];
+        
     }];
 }
 
