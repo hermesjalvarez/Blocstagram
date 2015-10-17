@@ -1,0 +1,3 @@
+pod 'UICKeyChainStore'
+
+xcodeproj '/Users/Hermes/bloc/Blocstagram/Blocstagram/Blocstagram.xcodeproj'
