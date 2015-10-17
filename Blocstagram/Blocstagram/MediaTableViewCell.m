@@ -27,9 +27,13 @@ static NSParagraphStyle *rightAlignParagraphStyle;
 
 @implementation MediaTableViewCell
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:NO animated:animated];
+}
+
 // default method to control selecting cell visual display
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+    [super setSelected:NO animated:animated];
 }
 
 // need to do everytime you subclass, designated initializer for tableview cell
