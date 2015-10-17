@@ -21,7 +21,7 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+	Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];	//	AV: using [DataSource sharedInstance].mediaItems here
     if (item.image) {
         return 350;
     } else {
@@ -36,7 +36,13 @@
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == [DataSource sharedInstance] && [keyPath isEqualToString:@"mediaItems"]) {
-        // We know mediaItems changed.  Let's see what kind of change it is.
+
+		//	AV: avoid table view animated updates for now
+		[self.tableView reloadData];
+		return;
+
+
+		// We know mediaItems changed.  Let's see what kind of change it is.
         NSKeyValueChange kindOfChange = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
         
         if (kindOfChange == NSKeyValueChangeSetting) {
@@ -102,8 +108,12 @@
 
 #pragma mark - Table view data source
 
+- (NSArray *)items {
+	return [DataSource sharedInstance].mediaItems;	//	AV: shortcut to always use the same data source
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self items].count;
+	return [self items].count;		//	AV: using local array as data source, which was never set and is always nil
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
