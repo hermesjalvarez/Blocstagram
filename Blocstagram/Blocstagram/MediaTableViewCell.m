@@ -4,18 +4,16 @@
 #import "User.h"
 
 @interface MediaTableViewCell ()
+
 @property (nonatomic, strong) UIImageView *mediaImageView;
 @property (nonatomic, strong) UILabel *usernameAndCaptionLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
-
-//add constraint properties
 @property (nonatomic, strong) NSLayoutConstraint *imageHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *usernameAndCaptionLabelHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *commentLabelHeightConstraint;
 
 @end
 
-// static: only one variable in memory for this, don't use memory for each cell (not properties)
 static UIFont *lightFont;
 static UIFont *boldFont;
 static UIColor *usernameLabelGray;
@@ -27,9 +25,12 @@ static NSParagraphStyle *rightAlignParagraphStyle;
 
 @implementation MediaTableViewCell
 
-// default method to control selecting cell visual display
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+     [super setSelected:NO animated:animated];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+     [super setSelected:NO animated:animated];
 }
 
 // need to do everytime you subclass, designated initializer for tableview cell

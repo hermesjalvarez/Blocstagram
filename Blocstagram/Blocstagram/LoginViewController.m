@@ -4,6 +4,7 @@
 @interface LoginViewController () <UIWebViewDelegate>
 
 @property (nonatomic, weak) UIWebView *webView;
+@property (nonatomic, strong) UIBarButtonItem *backButton;
 
 @end
 
@@ -22,6 +23,11 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //back button
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonTapped:)];
+    self.backButton = barButton;
+    self.navigationItem.leftBarButtonItem = barButton;
+    
     UIWebView *webView = [[UIWebView alloc] init];
     webView.delegate = self;
     
@@ -39,6 +45,11 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
         [self.webView loadRequest:request];
     }
     
+}
+
+- (void)backButtonTapped:(UIBarButtonItem *)sender {
+    
+    [self.webView goBack];
 }
 
 - (void) dealloc {
@@ -76,6 +87,15 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
     }
     
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+}
+
+- (void)processBackButton {
+    BOOL shouldShowBack = YES;  // this will depend on webview history
+    self.navigationItem.leftBarButtonItem = (shouldShowBack) ? self.backButton : nil;
 }
 
 - (void)didReceiveMemoryWarning {
