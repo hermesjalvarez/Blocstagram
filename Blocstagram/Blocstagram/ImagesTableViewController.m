@@ -102,6 +102,10 @@
 
 #pragma mark - Table view data source
 
+- (NSArray *)items {
+    	return [DataSource sharedInstance].mediaItems;	//	AV: shortcut to always use the same data source
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self items].count;
 }
