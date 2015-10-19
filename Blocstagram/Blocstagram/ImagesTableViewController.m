@@ -6,7 +6,6 @@
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
 
-
 @interface ImagesTableViewController () <MediaTableViewCellDelegate>
 @end
 
@@ -90,6 +89,10 @@
     
     // define class for the cell
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
+    
+    //assignment 35
+    [self refreshControlDidFire:self.refreshControl];
+    
 }
 
 - (void) refreshControlDidFire:(UIRefreshControl *) sender {
