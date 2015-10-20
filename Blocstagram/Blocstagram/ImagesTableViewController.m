@@ -93,7 +93,53 @@
     //assignment 35
     [self refreshControlDidFire:self.refreshControl];
     
+    //add button
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Share"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(shareAlert:)];
+    self.navigationItem.rightBarButtonItem = shareButton;
 }
+
+//share button
+- (IBAction)shareAlert:(id)sender {
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:[self screenshot], nil];
+    
+    //[itemsToShare addObject:[self screenshot]];
+
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
+//share screenshot
+-(UIImage *) screenshot
+{
+    // create graphics context with screen size
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    UIGraphicsBeginImageContext(screenRect.size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [[UIColor blackColor] set];
+    CGContextFillRect(ctx, screenRect);
+    
+    // grab reference to our window
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    
+    // transfer content into our context
+    [window.layer renderInContext:ctx];
+    UIImage *screengrab = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return screengrab;
+}
+
+////long press sharing
+//- (void) longPressFired:(UILongPressGestureRecognizer *)sender {
+//    if (sender.state == UIGestureRecognizerStateBegan) {
+//        [self.delegate cell:self didLongPressImageView:self.mediaImageView];
+//    }
+//}
 
 - (void) refreshControlDidFire:(UIRefreshControl *) sender {
     [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
@@ -159,6 +205,7 @@
     [self infiniteScrollIfNecessary];
 }
 
+//long press sharing
 - (void) cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView {
     NSMutableArray *itemsToShare = [NSMutableArray array];
     

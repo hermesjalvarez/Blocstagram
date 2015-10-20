@@ -6,6 +6,7 @@
 
 - (void) cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView;
 
+//long press sharing
 - (void) cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView;
 
 @end

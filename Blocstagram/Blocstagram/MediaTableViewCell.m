@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
+//long press sharing
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 @end
@@ -52,6 +53,7 @@ static NSParagraphStyle *rightAlignParagraphStyle;
     return self.isEditing == NO;
 }
 
+//long press sharing
 - (void) longPressFired:(UILongPressGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
         [self.delegate cell:self didLongPressImageView:self.mediaImageView];
@@ -74,7 +76,8 @@ static NSParagraphStyle *rightAlignParagraphStyle;
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
         self.tapGestureRecognizer.delegate = self;
         [self.mediaImageView addGestureRecognizer:self.tapGestureRecognizer];
-
+        
+        //long press sharing
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
         self.longPressGestureRecognizer.delegate = self;
         [self.mediaImageView addGestureRecognizer:self.longPressGestureRecognizer];
