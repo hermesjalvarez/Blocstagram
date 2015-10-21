@@ -245,4 +245,10 @@
     }
 }
 
+//retry image download
+- (void) cell:(MediaTableViewCell *)cell twoFingerPressImageView:(UIImageView *)imageView {
+    //I was not sure what this assignment meant by "retry image download"
+    //But I set up the two touch gesture and this delegate method here
+}
+
 @end
