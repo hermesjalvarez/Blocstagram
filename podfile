@@ -1,3 +1,4 @@
-pod 'UICKeyChainStore'
+ pod 'UICKeyChainStore'
+ pod 'AFNetworking'
 
 xcodeproj '/Users/Hermes/bloc/Blocstagram/Blocstagram/Blocstagram.xcodeproj'
