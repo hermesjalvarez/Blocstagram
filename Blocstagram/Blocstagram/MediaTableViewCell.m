@@ -67,7 +67,6 @@ static NSParagraphStyle *rightAlignParagraphStyle;
 
 //retry image download
 - (void) twoFingerPress:(UITapGestureRecognizer *)sender {
-    NSLog(@"two finger press");
     [self.delegate cell:self twoFingerPressImageView:self.mediaImageView];
 }
 

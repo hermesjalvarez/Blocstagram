@@ -12,6 +12,7 @@
 @property (nonatomic, weak) UIImageView *lastTappedImageView;
 @property (nonatomic,strong) MediaFullScreenViewController *fullScreenVC;
 @property (nonatomic,strong) UINavigationController *fsNavViewController;
+@property (nonatomic,strong) Media *mediaItem;
 
 @end
 
@@ -150,9 +151,9 @@
 }
 
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
-    if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
-        [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+    self.mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+    if (self.mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+        [[DataSource sharedInstance] downloadImageForMediaItem:self.mediaItem];
     }
 }
 
@@ -254,8 +255,8 @@
 
 //retry image download
 - (void) cell:(MediaTableViewCell *)cell twoFingerPressImageView:(UIImageView *)imageView {
-    //I was not sure what this assignment meant by "retry image download"
-    //But I set up the two touch gesture and this delegate method here
+        NSLog(@"two finger press");
+        [[DataSource sharedInstance] downloadImageForMediaItem:self.mediaItem];
 }
 
 @end
