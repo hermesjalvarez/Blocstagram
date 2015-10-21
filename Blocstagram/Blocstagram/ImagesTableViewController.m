@@ -5,11 +5,34 @@
 #import "Comment.h"
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
+#import "MediaFullScreenAnimator.h"
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, UIViewControllerTransitioningDelegate>
+
+@property (nonatomic, weak) UIImageView *lastTappedImageView;
+@property (nonatomic,strong) MediaFullScreenViewController *fullScreenVC;
+@property (nonatomic,strong) UINavigationController *fsNavViewController;
+
 @end
 
 @implementation ImagesTableViewController
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                  presentingController:(UIViewController *)presenting
+                                                                      sourceController:(UIViewController *)source {
+    MediaFullScreenAnimator *animator = [MediaFullScreenAnimator new];
+    animator.presenting = YES;
+    animator.cellImageView = self.lastTappedImageView;
+    return animator;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    MediaFullScreenAnimator *animator = [MediaFullScreenAnimator new];
+    animator.cellImageView = self.lastTappedImageView;
+    return animator;
+}
 
 - (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
@@ -85,61 +108,13 @@
     
     [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
     
-    //self.tableView.rowHeight --> can define row height for each row with this
-    
     // define class for the cell
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
     
     //assignment 35
     [self refreshControlDidFire:self.refreshControl];
     
-    //add button
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"Share"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(shareAlert:)];
-    self.navigationItem.rightBarButtonItem = shareButton;
 }
-
-//share button
-- (IBAction)shareAlert:(id)sender {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:[self screenshot], nil];
-    
-    //[itemsToShare addObject:[self screenshot]];
-
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
-    
-    [self presentViewController:activityVC animated:YES completion:nil];
-}
-
-//share screenshot
--(UIImage *) screenshot
-{
-    // create graphics context with screen size
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    UIGraphicsBeginImageContext(screenRect.size);
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[UIColor blackColor] set];
-    CGContextFillRect(ctx, screenRect);
-    
-    // grab reference to our window
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    
-    // transfer content into our context
-    [window.layer renderInContext:ctx];
-    UIImage *screengrab = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return screengrab;
-}
-
-////long press sharing
-//- (void) longPressFired:(UILongPressGestureRecognizer *)sender {
-//    if (sender.state == UIGestureRecognizerStateBegan) {
-//        [self.delegate cell:self didLongPressImageView:self.mediaImageView];
-//    }
-//}
 
 - (void) refreshControlDidFire:(UIRefreshControl *) sender {
     [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
@@ -177,9 +152,56 @@
 #pragma mark - MediaTableViewCellDelegate
 
 - (void) cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView {
-    MediaFullScreenViewController *fullScreenVC = [[MediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
     
-    [self presentViewController:fullScreenVC animated:YES completion:nil];
+    self.lastTappedImageView = imageView;
+    
+    self.fullScreenVC = [[MediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
+    
+    self.fullScreenVC.transitioningDelegate = self;
+    self.fullScreenVC.modalPresentationStyle = UIModalPresentationCustom;
+    
+    self.fsNavViewController = [[UINavigationController alloc] initWithRootViewController:self.fullScreenVC];
+
+    //present share button
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Share"
+                                    style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(shareAlert:)];
+    self.fullScreenVC.navigationItem.rightBarButtonItem = shareButton;
+    
+    [self presentViewController:self.fsNavViewController animated:YES completion:nil];
+    
+}
+
+//share button
+- (IBAction)shareAlert:(id)sender {
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:[self screenshot], nil];
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
+//share screenshot
+-(UIImage *) screenshot
+{
+    // create graphics context with screen size
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    UIGraphicsBeginImageContext(screenRect.size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [[UIColor blackColor] set];
+    CGContextFillRect(ctx, screenRect);
+    
+    // grab reference to our window
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    
+    // transfer content into our context
+    [window.layer renderInContext:ctx];
+    UIImage *screengrab = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return screengrab;
 }
 
 //not always needed when cells have same size
