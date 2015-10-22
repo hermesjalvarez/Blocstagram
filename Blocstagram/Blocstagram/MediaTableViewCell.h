@@ -12,6 +12,8 @@
 //retry image download
 - (void) cell:(MediaTableViewCell *)cell twoFingerPressImageView:(UIImageView *)imageView;
 
+- (void) cellDidPressLikeButton:(MediaTableViewCell *)cell;
+
 @end
 
 @interface MediaTableViewCell : UITableViewCell
