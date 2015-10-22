@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) LikeButton *likeButton;
 
+@property (nonatomic,strong) UILabel *likesLabel;
+
 @end
 
 // static: only one variable in memory for this, don't use memory for each cell (not properties)
@@ -111,7 +113,17 @@ static NSParagraphStyle *rightAlignParagraphStyle;
         [self.likeButton addTarget:self action:@selector(likePressed:) forControlEvents:UIControlEventTouchUpInside];
         self.likeButton.backgroundColor = usernameLabelGray;
         
-        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton]) {
+        self.likesLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        self.likesLabel.text = [[NSNumber numberWithInt:11] stringValue];
+        self.likesLabel.font = lightFont;
+        self.likesLabel.numberOfLines = 0;
+        self.likesLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
+        self.likesLabel.textColor = [UIColor blackColor];
+        self.likesLabel.backgroundColor = usernameLabelGray;
+        self.likesLabel.textAlignment = NSTextAlignmentCenter;
+        [self.likesLabel sizeToFit];
+        
+        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesLabel]) {
             [self.contentView addSubview:view];
             
             // need to disable when using constraints
@@ -119,11 +131,11 @@ static NSParagraphStyle *rightAlignParagraphStyle;
         }
         
         //add constraints
-        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton);
+        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likesLabel);
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likesLabel(==38)][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_commentLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
