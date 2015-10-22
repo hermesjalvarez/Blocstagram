@@ -5,8 +5,12 @@
 #import "Comment.h"
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
+#import "MediaFullScreenAnimator.h"
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, UIViewControllerTransitioningDelegate>
+
+@property (nonatomic, weak) UIImageView *lastTappedImageView;
+
 @end
 
 @implementation ImagesTableViewController
@@ -92,54 +96,7 @@
     
     //assignment 35
     [self refreshControlDidFire:self.refreshControl];
-    
-    //add button
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"Share"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(shareAlert:)];
-    self.navigationItem.rightBarButtonItem = shareButton;
 }
-
-//share button
-- (IBAction)shareAlert:(id)sender {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:[self screenshot], nil];
-    
-    //[itemsToShare addObject:[self screenshot]];
-
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
-    
-    [self presentViewController:activityVC animated:YES completion:nil];
-}
-
-//share screenshot
--(UIImage *) screenshot
-{
-    // create graphics context with screen size
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    UIGraphicsBeginImageContext(screenRect.size);
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[UIColor blackColor] set];
-    CGContextFillRect(ctx, screenRect);
-    
-    // grab reference to our window
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    
-    // transfer content into our context
-    [window.layer renderInContext:ctx];
-    UIImage *screengrab = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return screengrab;
-}
-
-////long press sharing
-//- (void) longPressFired:(UILongPressGestureRecognizer *)sender {
-//    if (sender.state == UIGestureRecognizerStateBegan) {
-//        [self.delegate cell:self didLongPressImageView:self.mediaImageView];
-//    }
-//}
 
 - (void) refreshControlDidFire:(UIRefreshControl *) sender {
     [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
@@ -177,9 +134,35 @@
 #pragma mark - MediaTableViewCellDelegate
 
 - (void) cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView {
+    
+    self.lastTappedImageView = imageView;
+    
     MediaFullScreenViewController *fullScreenVC = [[MediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
     
-    [self presentViewController:fullScreenVC animated:YES completion:nil];
+    fullScreenVC.transitioningDelegate = self;
+    fullScreenVC.modalPresentationStyle = UIModalPresentationCustom;
+    
+    //share button on full screen view
+    UINavigationController *fsNavViewController = [[UINavigationController alloc] initWithRootViewController:fullScreenVC];
+    
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Share"
+                                    style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(shareAlert:)];
+    
+    fullScreenVC.navigationItem.rightBarButtonItem = shareButton;
+    //I also lose the animation here
+    [self presentViewController:fsNavViewController animated:YES completion:nil];
+}
+
+//share button (can't get it to work)
+- (IBAction)shareAlert:(id)sender {
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:self.lastTappedImageView, nil];
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 //not always needed when cells have same size
@@ -221,6 +204,23 @@
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
         [self presentViewController:activityVC animated:YES completion:nil];
     }
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                  presentingController:(UIViewController *)presenting
+                                                                      sourceController:(UIViewController *)source {
+    MediaFullScreenAnimator *animator = [MediaFullScreenAnimator new];
+    animator.presenting = YES;
+    animator.cellImageView = self.lastTappedImageView;
+    return animator;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    MediaFullScreenAnimator *animator = [MediaFullScreenAnimator new];
+    animator.cellImageView = self.lastTappedImageView;
+    return animator;
 }
 
 @end
