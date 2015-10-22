@@ -9,6 +9,9 @@
 //long press sharing
 - (void) cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView;
 
+//retry image download
+- (void) cell:(MediaTableViewCell *)cell twoFingerPressImageView:(UIImageView *)imageView;
+
 @end
 
 @interface MediaTableViewCell : UITableViewCell

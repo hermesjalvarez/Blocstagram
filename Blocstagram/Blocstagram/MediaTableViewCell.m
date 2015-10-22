@@ -18,6 +18,9 @@
 //long press sharing
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
+//two finger press
+@property (nonatomic, strong) UITapGestureRecognizer *twoFingerPress;
+
 @end
 
 // static: only one variable in memory for this, don't use memory for each cell (not properties)
@@ -60,6 +63,11 @@ static NSParagraphStyle *rightAlignParagraphStyle;
     }
 }
 
+//retry image download
+- (void) twoFingerPress:(UITapGestureRecognizer *)sender {
+    [self.delegate cell:self twoFingerPressImageView:self.mediaImageView];
+}
+
 // need to do everytime you subclass, designated initializer for tableview cell
 // not required, called by default
 // but if you have a complex cell this is where you initialize stuff, where layout is created
@@ -76,6 +84,12 @@ static NSParagraphStyle *rightAlignParagraphStyle;
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
         self.tapGestureRecognizer.delegate = self;
         [self.mediaImageView addGestureRecognizer:self.tapGestureRecognizer];
+        
+        //two finger press
+        self.twoFingerPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPress:)];
+        [self.twoFingerPress setNumberOfTouchesRequired:2];
+        self.twoFingerPress.delegate = self;
+        [self.mediaImageView addGestureRecognizer:self.twoFingerPress];
         
         //long press sharing
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];

@@ -223,4 +223,12 @@
     return animator;
 }
 
+//retry image download
+- (void) cell:(MediaTableViewCell *)cell twoFingerPressImageView:(UIImageView *)imageView {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Media *item = [self items][indexPath.row];
+    [[DataSource sharedInstance] downloadImageForMediaItem:item];
+    NSLog(@"two finger press");
+}
+
 @end
