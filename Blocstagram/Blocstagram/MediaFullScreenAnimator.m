@@ -12,7 +12,7 @@
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey]; // #11
     
     if (self.presenting) {
-        MediaFullScreenViewController *fullScreenVC = (MediaFullScreenViewController *)toViewController; // #12
+        MediaFullScreenViewController *fsNavViewController = (MediaFullScreenViewController *)toViewController; // #12
         
         fromViewController.view.userInteractionEnabled = NO; // #13
         
@@ -22,34 +22,34 @@
         CGRect endFrame = fromViewController.view.frame; // #16
         
         toViewController.view.frame = startFrame;
-        fullScreenVC.imageView.frame = toViewController.view.bounds;
+        fsNavViewController.imageView.frame = toViewController.view.bounds;
         
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
             fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
             
-            fullScreenVC.view.frame = endFrame;
-            [fullScreenVC centerScrollView];
+            fsNavViewController.view.frame = endFrame;
+            [fsNavViewController centerScrollView];
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];
         }];
     } else {
-        MediaFullScreenViewController *fullScreenVC = (MediaFullScreenViewController *)fromViewController;
+        MediaFullScreenViewController *fsNavViewController = (MediaFullScreenViewController *)fromViewController;
         
         CGRect endFrame = [transitionContext.containerView convertRect:self.cellImageView.bounds fromView:self.cellImageView];
-        CGRect imageStartFrame = [fullScreenVC.view convertRect:fullScreenVC.imageView.frame fromView:fullScreenVC.scrollView];
-        CGRect imageEndFrame = [transitionContext.containerView convertRect:endFrame toView:fullScreenVC.view];
+        CGRect imageStartFrame = [fsNavViewController.view convertRect:fsNavViewController.imageView.frame fromView:fsNavViewController.scrollView];
+        CGRect imageEndFrame = [transitionContext.containerView convertRect:endFrame toView:fsNavViewController.view];
         
         imageEndFrame.origin.y = 0;
         
-        [fullScreenVC.view addSubview:fullScreenVC.imageView];
-        fullScreenVC.imageView.frame = imageStartFrame;
-        fullScreenVC.imageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+        [fsNavViewController.view addSubview:fsNavViewController.imageView];
+        fsNavViewController.imageView.frame = imageStartFrame;
+        fsNavViewController.imageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
         
         toViewController.view.userInteractionEnabled = YES;
         
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-            fullScreenVC.view.frame = endFrame;
-            fullScreenVC.imageView.frame = imageEndFrame;
+            fsNavViewController.view.frame = endFrame;
+            fsNavViewController.imageView.frame = imageEndFrame;
             
             toViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
         } completion:^(BOOL finished) {

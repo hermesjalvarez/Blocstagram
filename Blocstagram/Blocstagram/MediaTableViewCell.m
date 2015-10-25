@@ -3,32 +3,28 @@
 #import "Comment.h"
 #import "User.h"
 #import "LikeButton.h"
+#import "LikesLabelView.h"
 
 @interface MediaTableViewCell () <UIGestureRecognizerDelegate>
+
 @property (nonatomic, strong) UIImageView *mediaImageView;
 @property (nonatomic, strong) UILabel *usernameAndCaptionLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
 
-//add constraint properties
 @property (nonatomic, strong) NSLayoutConstraint *imageHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *usernameAndCaptionLabelHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *commentLabelHeightConstraint;
-
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
-
-//long press sharing
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
-
-//two finger press
 @property (nonatomic, strong) UITapGestureRecognizer *twoFingerPress;
-
 @property (nonatomic, strong) LikeButton *likeButton;
-
+@property (nonatomic,strong) LikesLabelView *likesLabelView;
 @property (nonatomic,strong) UILabel *likesLabel;
+@property (nonatomic,strong) NSString *testString;
 
 @end
 
-// static: only one variable in memory for this, don't use memory for each cell (not properties)
+
 static UIFont *lightFont;
 static UIFont *boldFont;
 static UIColor *usernameLabelGray;
@@ -38,68 +34,22 @@ static NSParagraphStyle *paragraphStyle;
 static UIColor *orangeText;
 static NSParagraphStyle *rightAlignParagraphStyle;
 
+
 @implementation MediaTableViewCell
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:NO animated:animated];
-}
-
-// default method to control selecting cell visual display
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:NO animated:animated];
-}
-
-#pragma mark - Image View
-
-- (void) tapFired:(UITapGestureRecognizer *)sender {
-    [self.delegate cell:self didTapImageView:self.mediaImageView];
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-
-- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    return self.isEditing == NO;
-}
-
-//long press sharing
-- (void) longPressFired:(UILongPressGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        [self.delegate cell:self didLongPressImageView:self.mediaImageView];
-    }
-}
-
-//retry image download
-- (void) twoFingerPress:(UITapGestureRecognizer *)sender {
-    [self.delegate cell:self twoFingerPressImageView:self.mediaImageView];
-}
 
 // need to do everytime you subclass, designated initializer for tableview cell
 // not required, called by default
 // but if you have a complex cell this is where you initialize stuff, where layout is created
 // if you use Xib you do this in interface builder
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{ //init a good place to add constraints
+//init a good place to add constraints
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
     //manually create layout
     if (self) {
         self.mediaImageView = [[UIImageView alloc] init];
-        
         self.mediaImageView.userInteractionEnabled = YES;
-        
-        self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
-        self.tapGestureRecognizer.delegate = self;
-        [self.mediaImageView addGestureRecognizer:self.tapGestureRecognizer];
-        
-        //two finger press
-        self.twoFingerPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPress:)];
-        [self.twoFingerPress setNumberOfTouchesRequired:2];
-        self.twoFingerPress.delegate = self;
-        [self.mediaImageView addGestureRecognizer:self.twoFingerPress];
-        
-        //long press sharing
-        self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
-        self.longPressGestureRecognizer.delegate = self;
-        [self.mediaImageView addGestureRecognizer:self.longPressGestureRecognizer];
         
         self.usernameAndCaptionLabel = [[UILabel alloc] init];
         self.usernameAndCaptionLabel.numberOfLines = 0;
@@ -109,33 +59,45 @@ static NSParagraphStyle *rightAlignParagraphStyle;
         self.commentLabel.numberOfLines = 0;
         self.commentLabel.backgroundColor = commentLabelGray;
         
+        self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
+        self.tapGestureRecognizer.delegate = self;
+        [self.mediaImageView addGestureRecognizer:self.tapGestureRecognizer];
+        
+        self.twoFingerPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPress:)];
+        [self.twoFingerPress setNumberOfTouchesRequired:2];
+        self.twoFingerPress.delegate = self;
+        [self.mediaImageView addGestureRecognizer:self.twoFingerPress];
+        
+        self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
+        self.longPressGestureRecognizer.delegate = self;
+        [self.mediaImageView addGestureRecognizer:self.longPressGestureRecognizer];
+        
         self.likeButton = [[LikeButton alloc] init];
         [self.likeButton addTarget:self action:@selector(likePressed:) forControlEvents:UIControlEventTouchUpInside];
         self.likeButton.backgroundColor = usernameLabelGray;
         
+        self.likesLabelView = [[LikesLabelView alloc] init];
+        self.likesLabelView.backgroundColor = usernameLabelGray;
+        
         self.likesLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        self.likesLabel.text = [[NSNumber numberWithInt:11] stringValue];
         self.likesLabel.font = lightFont;
         self.likesLabel.numberOfLines = 0;
-        self.likesLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
         self.likesLabel.textColor = [UIColor blackColor];
         self.likesLabel.backgroundColor = usernameLabelGray;
-        self.likesLabel.textAlignment = NSTextAlignmentCenter;
-        [self.likesLabel sizeToFit];
         
-        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesLabel]) {
+        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesLabelView, self.likesLabel]) {
             [self.contentView addSubview:view];
             
             // need to disable when using constraints
-            view.translatesAutoresizingMaskIntoConstraints = NO;
+            view.translatesAutoresizingMaskIntoConstraints = NO; //causes frames to be ignored
         }
         
         //add constraints
-        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likesLabel);
+        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likesLabelView, _likesLabel);
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likesLabel(==38)][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likesLabelView(==38)][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_commentLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
@@ -144,6 +106,22 @@ static NSParagraphStyle *rightAlignParagraphStyle;
                                                                                  metrics:nil
                                                                                    views:viewDictionary]];
         
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.likesLabel
+                                                                     attribute:NSLayoutAttributeCenterY
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.likeButton.spinnerView
+                                                                     attribute:NSLayoutAttributeCenterY
+                                                                    multiplier:1
+                                                                      constant:0]];
+        
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.likesLabel
+                                                                     attribute:NSLayoutAttributeRight
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.likesLabelView
+                                                                     attribute:NSLayoutAttributeRight
+                                                                    multiplier:1
+                                                                      constant:0]];
+        
         self.imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_mediaImageView
                                                                   attribute:NSLayoutAttributeHeight
                                                                   relatedBy:NSLayoutRelationEqual
@@ -151,6 +129,7 @@ static NSParagraphStyle *rightAlignParagraphStyle;
                                                                   attribute:NSLayoutAttributeNotAnAttribute
                                                                  multiplier:1
                                                                    constant:100];
+        
         self.imageHeightConstraint.identifier = @"Image height constraint";
         
         self.usernameAndCaptionLabelHeightConstraint = [NSLayoutConstraint constraintWithItem:_usernameAndCaptionLabel
@@ -170,12 +149,91 @@ static NSParagraphStyle *rightAlignParagraphStyle;
                                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                                         multiplier:1
                                                                           constant:100];
+        
         self.commentLabelHeightConstraint.identifier = @"Comment label height constraint";
         
         [self.contentView addConstraints:@[self.imageHeightConstraint, self.usernameAndCaptionLabelHeightConstraint, self.commentLabelHeightConstraint]];
-        
     }
     return self;
+}
+
+- (NSAttributedString *) likesLabelString {
+    
+    CGFloat usernameFontSize = 10;
+    
+    //IG count is an NSNumber that has to be converted to an int in this way, you can't use stringValue method of NSNumber for some reason
+    NSString *baseString = [NSString stringWithFormat:@"%@", self.mediaItem.likeCount];
+    NSLog(@"%@",baseString);
+    
+    NSMutableAttributedString *labelString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : [lightFont fontWithSize:usernameFontSize], NSParagraphStyleAttributeName : rightAlignParagraphStyle}];
+    
+    return labelString;
+    
+}
+
+- (NSAttributedString *) usernameAndCaptionString {
+    
+    // #1
+    CGFloat usernameFontSize = 15;
+    
+    //two step process: (1) create simple string (2) use range to style different things differently
+    
+    // #2 - Make a string that says "username caption"
+    NSString *baseString = [NSString stringWithFormat:@"%@ %@", self.mediaItem.user.userName, self.mediaItem.caption];
+    
+    // #3 - Make an attributed string, with the "username" bold
+    NSMutableAttributedString *mutableUsernameAndCaptionString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : [lightFont fontWithSize:usernameFontSize], NSParagraphStyleAttributeName : paragraphStyle}];
+    
+    // #4
+    NSRange usernameRange = [baseString rangeOfString:self.mediaItem.user.userName];
+    [mutableUsernameAndCaptionString addAttribute:NSFontAttributeName value:[boldFont fontWithSize:usernameFontSize] range:usernameRange];
+    [mutableUsernameAndCaptionString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
+    
+    //change caption kerning
+    NSRange captionRange = [baseString rangeOfString:self.mediaItem.caption];
+    [mutableUsernameAndCaptionString addAttribute:NSKernAttributeName value:@3.0 range:captionRange];
+    
+    return mutableUsernameAndCaptionString;
+}
+
+- (NSAttributedString *) commentString {
+    
+    //__block NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
+    NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
+    
+    int counter = 0;
+    
+    //    [self.mediaItem.comments enumerateObjectsUsingBlock:^(Comment *comment, NSUInteger counter, BOOL * _Nonnull stop) {
+    //
+    //    }]
+    
+    for (Comment *comment in self.mediaItem.comments) {
+        // Make a string that says "username comment" followed by a line break
+        NSString *baseString = [NSString stringWithFormat:@"%@ %@\n", comment.from.userName, comment.text];
+        
+        // Make an attributed string, with the "username" bold
+        NSMutableAttributedString *oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : paragraphStyle}];
+        
+        NSRange usernameRange = [baseString rangeOfString:comment.from.userName];
+        [oneCommentString addAttribute:NSFontAttributeName value:boldFont range:usernameRange];
+        [oneCommentString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
+        
+        if (counter==0) { //color first comment orange
+            NSRange orangeTextRange = [baseString rangeOfString:baseString];
+            [oneCommentString addAttribute:NSForegroundColorAttributeName value:orangeText range:orangeTextRange];
+        }
+        
+        if (counter%2 == 0) { //right align every other comment
+            NSRange rightAlignRange = [baseString rangeOfString:baseString];
+            [oneCommentString addAttribute:NSParagraphStyleAttributeName value:rightAlignParagraphStyle range:rightAlignRange];
+        }
+        
+        counter++;
+        
+        [commentString appendAttributedString:oneCommentString];
+    }
+    
+    return commentString;
 }
 
 // + class method
@@ -211,71 +269,13 @@ static NSParagraphStyle *rightAlignParagraphStyle;
     paragraphStyle = mutableParagraphStyle;
 }
 
-//
-- (NSAttributedString *) usernameAndCaptionString {
-    
-    // #1
-    CGFloat usernameFontSize = 15;
-    
-    //two step process: (1) create simple string (2) use range to style different things differently
-    
-    // #2 - Make a string that says "username caption"
-    NSString *baseString = [NSString stringWithFormat:@"%@ %@", self.mediaItem.user.userName, self.mediaItem.caption];
-    
-    // #3 - Make an attributed string, with the "username" bold
-    NSMutableAttributedString *mutableUsernameAndCaptionString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : [lightFont fontWithSize:usernameFontSize], NSParagraphStyleAttributeName : paragraphStyle}];
-    
-    // #4
-    NSRange usernameRange = [baseString rangeOfString:self.mediaItem.user.userName];
-    [mutableUsernameAndCaptionString addAttribute:NSFontAttributeName value:[boldFont fontWithSize:usernameFontSize] range:usernameRange];
-    [mutableUsernameAndCaptionString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
-    
-    //change caption kerning
-    NSRange captionRange = [baseString rangeOfString:self.mediaItem.caption];
-    [mutableUsernameAndCaptionString addAttribute:NSKernAttributeName value:@3.0 range:captionRange];
-
-    
-    return mutableUsernameAndCaptionString;
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:NO animated:animated];
 }
 
-- (NSAttributedString *) commentString {
-    
-    //__block NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
-    NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
-
-    int counter = 0;
-    
-//    [self.mediaItem.comments enumerateObjectsUsingBlock:^(Comment *comment, NSUInteger counter, BOOL * _Nonnull stop) {
-//        
-//    }]
-    
-    for (Comment *comment in self.mediaItem.comments) {
-        // Make a string that says "username comment" followed by a line break
-        NSString *baseString = [NSString stringWithFormat:@"%@ %@\n", comment.from.userName, comment.text];
-        
-        // Make an attributed string, with the "username" bold
-        NSMutableAttributedString *oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : paragraphStyle}];
-        
-        NSRange usernameRange = [baseString rangeOfString:comment.from.userName];
-        [oneCommentString addAttribute:NSFontAttributeName value:boldFont range:usernameRange];
-        [oneCommentString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
-        
-        if (counter==0) { //color first comment orange
-            NSRange orangeTextRange = [baseString rangeOfString:baseString];
-            [oneCommentString addAttribute:NSForegroundColorAttributeName value:orangeText range:orangeTextRange];
-        }
-        
-        if (counter%2 == 0) { //right align every other comment
-            NSRange rightAlignRange = [baseString rangeOfString:baseString];
-            [oneCommentString addAttribute:NSParagraphStyleAttributeName value:rightAlignParagraphStyle range:rightAlignRange];
-        }
-        
-        counter++;
-        
-        [commentString appendAttributedString:oneCommentString];
-    }
-    
-    return commentString;
+// default method to control selecting cell visual display
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:NO animated:animated];
 }
 
 - (void) layoutSubviews {
@@ -305,6 +305,7 @@ static NSParagraphStyle *rightAlignParagraphStyle;
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
     self.commentLabel.attributedText = [self commentString];
     self.likeButton.likeButtonState = mediaItem.likeState;
+    self.likesLabel.attributedText = [self likesLabelString];
 }
 
 + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width {
@@ -326,6 +327,30 @@ static NSParagraphStyle *rightAlignParagraphStyle;
 
 - (void) likePressed:(UIButton *)sender {
     [self.delegate cellDidPressLikeButton:self];
+}
+
+#pragma mark - Image View
+
+- (void) tapFired:(UITapGestureRecognizer *)sender {
+    [self.delegate cell:self didTapImageView:self.mediaImageView];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return self.isEditing == NO;
+}
+
+//long press sharing
+- (void) longPressFired:(UILongPressGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [self.delegate cell:self didLongPressImageView:self.mediaImageView];
+    }
+}
+
+//retry image download
+- (void) twoFingerPress:(UITapGestureRecognizer *)sender {
+    [self.delegate cell:self twoFingerPressImageView:self.mediaImageView];
 }
 
 @end

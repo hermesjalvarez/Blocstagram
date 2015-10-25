@@ -128,6 +128,8 @@
     // give tableview for for wch row
     cell.mediaItem = [self items][indexPath.row];
     
+//    self.tableView.dragging
+    
     return cell;
 }
 
@@ -139,10 +141,6 @@
     
     MediaFullScreenViewController *fullScreenVC = [[MediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
     
-    fullScreenVC.transitioningDelegate = self;
-    fullScreenVC.modalPresentationStyle = UIModalPresentationCustom;
-    
-    //share button on full screen view
     UINavigationController *fsNavViewController = [[UINavigationController alloc] initWithRootViewController:fullScreenVC];
     
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
@@ -152,7 +150,10 @@
                                     action:@selector(shareAlert:)];
     
     fullScreenVC.navigationItem.rightBarButtonItem = shareButton;
-    //I also lose the animation here
+    
+    fsNavViewController.transitioningDelegate = self;
+    fsNavViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [self presentViewController:fsNavViewController animated:YES completion:nil];
 }
 
@@ -182,6 +183,16 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    
+//    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:<#(UITableViewRowAnimation)#>]
+}
 
 // #4
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

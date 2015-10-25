@@ -34,6 +34,7 @@
 		A1E328091BD871800081F2AE /* MediaFullScreenAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328081BD871800081F2AE /* MediaFullScreenAnimator.m */; settings = {ASSET_TAGS = (); }; };
 		A1E3280C1BD889EE0081F2AE /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3280B1BD889EE0081F2AE /* CircleSpinnerView.m */; settings = {ASSET_TAGS = (); }; };
 		A1E3280F1BD88AA40081F2AE /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3280E1BD88AA40081F2AE /* LikeButton.m */; settings = {ASSET_TAGS = (); }; };
+		A1E3281E1BDC6B230081F2AE /* LikesLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3281D1BDC6B230081F2AE /* LikesLabelView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		A1E3280B1BD889EE0081F2AE /* CircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSpinnerView.m; sourceTree = "<group>"; };
 		A1E3280D1BD88AA40081F2AE /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
 		A1E3280E1BD88AA40081F2AE /* LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeButton.m; sourceTree = "<group>"; };
+		A1E3281C1BDC6B230081F2AE /* LikesLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesLabelView.h; sourceTree = "<group>"; };
+		A1E3281D1BDC6B230081F2AE /* LikesLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesLabelView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +175,8 @@
 				A1E3280B1BD889EE0081F2AE /* CircleSpinnerView.m */,
 				A1E3280D1BD88AA40081F2AE /* LikeButton.h */,
 				A1E3280E1BD88AA40081F2AE /* LikeButton.m */,
+				A1E3281C1BDC6B230081F2AE /* LikesLabelView.h */,
+				A1E3281D1BDC6B230081F2AE /* LikesLabelView.m */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				A13BD4FC1BC9E81300D36F0F /* Media.m in Sources */,
 				A1AF6BDF1BC9C498006D1C45 /* AppDelegate.m in Sources */,
 				A13BD50B1BCF622700D36F0F /* LoginViewController.m in Sources */,
+				A1E3281E1BDC6B230081F2AE /* LikesLabelView.m in Sources */,
 				A13BD5021BC9EA2400D36F0F /* DataSource.m in Sources */,
 				A1AF6BDC1BC9C498006D1C45 /* main.m in Sources */,
 				A1E3280F1BD88AA40081F2AE /* LikeButton.m in Sources */,

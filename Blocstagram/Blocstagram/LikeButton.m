@@ -5,9 +5,6 @@
 #define kUnlikedStateImage @"heart-empty"
 
 @interface LikeButton ()
-
-@property (nonatomic, strong) CircleSpinnerView *spinnerView;
-
 @end
 
 @implementation LikeButton

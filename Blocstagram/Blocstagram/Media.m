@@ -9,6 +9,7 @@
     
     if (self) {
         self.idNumber = mediaDictionary[@"id"];
+        self.likeCount = mediaDictionary[@"likes"][@"count"];
         self.user = [[User alloc] initWithDictionary:mediaDictionary[@"user"]];
         NSString *standardResolutionImageURLString = mediaDictionary[@"images"][@"standard_resolution"][@"url"];
         NSURL *standardResolutionImageURL = [NSURL URLWithString:standardResolutionImageURLString];
@@ -53,6 +54,7 @@
     
     if (self) {
         self.idNumber = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(idNumber))];
+        self.likeCount = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(likeCount))];
         self.user = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(user))];
         self.mediaURL = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(mediaURL))];
         self.image = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(image))];
@@ -75,6 +77,7 @@
 
 - (void) encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.idNumber forKey:NSStringFromSelector(@selector(idNumber))];
+    [aCoder encodeObject:self.likeCount forKey:NSStringFromSelector(@selector(likeCount))];
     [aCoder encodeObject:self.user forKey:NSStringFromSelector(@selector(user))];
     [aCoder encodeObject:self.mediaURL forKey:NSStringFromSelector(@selector(mediaURL))];
     [aCoder encodeObject:self.image forKey:NSStringFromSelector(@selector(image))];
