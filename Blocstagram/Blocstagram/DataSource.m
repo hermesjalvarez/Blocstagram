@@ -119,7 +119,10 @@
 //new method
 - (void) downloadImageForMediaItem:(Media *)mediaItem {
     if (mediaItem.mediaURL && !mediaItem.image) {
-        mediaItem.downloadState = MediaDownloadStateDownloadInProgress;
+		//	IDEA: prevent multiple requests for the same image 
+		if (mediaItem.downloadState == MediaDownloadStateDownloadInProgress) return;
+
+		mediaItem.downloadState = MediaDownloadStateDownloadInProgress;
         
         [self.instagramOperationManager GET:mediaItem.mediaURL.absoluteString
                                  parameters:nil
