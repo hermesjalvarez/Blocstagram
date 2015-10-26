@@ -143,27 +143,10 @@
     
     UINavigationController *fsNavViewController = [[UINavigationController alloc] initWithRootViewController:fullScreenVC];
     
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Share"
-                                    style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(shareAlert:)];
-    
-    fullScreenVC.navigationItem.rightBarButtonItem = shareButton;
-    
     fsNavViewController.transitioningDelegate = self;
     fsNavViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self presentViewController:fsNavViewController animated:YES completion:nil];
-}
-
-//share button (can't get it to work)
-- (IBAction)shareAlert:(id)sender {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:self.lastTappedImageView, nil];
-    
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
-    
-    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 //not always needed when cells have same size
