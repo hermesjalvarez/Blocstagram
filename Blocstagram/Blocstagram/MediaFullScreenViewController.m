@@ -14,12 +14,25 @@
 
 - (instancetype) initWithMedia:(Media *)media {
     self = [super init];
-    
+
     if (self) {
+		//	this prevents UIKit to automatically moves our centered imageview down, in the scroll view
+		//	that's useful for table/collection views, but not for this case
+		self.automaticallyAdjustsScrollViewInsets = NO;
+
         self.media = media;
     }
     
     return self;
+}
+
+//share button (can't get it to work)
+- (IBAction)shareAlert:(id)sender {
+	NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:self.imageView.image, nil];
+
+	UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+
+	[self presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (void)viewDidLoad {
@@ -50,7 +63,13 @@
     
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
-    
+
+	UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+									initWithTitle:@"Share"
+									style:UIBarButtonItemStylePlain
+									target:self
+									action:@selector(shareAlert:)];
+	self.navigationItem.rightBarButtonItem = shareButton;
 }
 
 #pragma mark - Gesture Recognizers

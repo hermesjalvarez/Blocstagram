@@ -76,16 +76,13 @@ static NSParagraphStyle *rightAlignParagraphStyle;
         [self.likeButton addTarget:self action:@selector(likePressed:) forControlEvents:UIControlEventTouchUpInside];
         self.likeButton.backgroundColor = usernameLabelGray;
         
-        self.likesLabelView = [[LikesLabelView alloc] init];
-        self.likesLabelView.backgroundColor = usernameLabelGray;
-        
         self.likesLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         self.likesLabel.font = lightFont;
         self.likesLabel.numberOfLines = 0;
         self.likesLabel.textColor = [UIColor blackColor];
         self.likesLabel.backgroundColor = usernameLabelGray;
         
-        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesLabelView, self.likesLabel]) {
+        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesLabel]) {
             [self.contentView addSubview:view];
             
             // need to disable when using constraints
@@ -93,11 +90,11 @@ static NSParagraphStyle *rightAlignParagraphStyle;
         }
         
         //add constraints
-        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likesLabelView, _likesLabel);
+        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likesLabel);
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likesLabelView(==38)][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel]-4-[_likesLabel][_likeButton(==38)]|" options:0 metrics:nil views:viewDictionary]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_commentLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
@@ -106,19 +103,19 @@ static NSParagraphStyle *rightAlignParagraphStyle;
                                                                                  metrics:nil
                                                                                    views:viewDictionary]];
         
+		[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.likeButton
+																	 attribute:NSLayoutAttributeTop
+																	 relatedBy:NSLayoutRelationEqual
+																		toItem:self.usernameAndCaptionLabel
+																	 attribute:NSLayoutAttributeTop
+																	multiplier:1
+																	  constant:0]];
+
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.likesLabel
                                                                      attribute:NSLayoutAttributeCenterY
                                                                      relatedBy:NSLayoutRelationEqual
                                                                         toItem:self.likeButton.spinnerView
                                                                      attribute:NSLayoutAttributeCenterY
-                                                                    multiplier:1
-                                                                      constant:0]];
-        
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.likesLabel
-                                                                     attribute:NSLayoutAttributeRight
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:self.likesLabelView
-                                                                     attribute:NSLayoutAttributeRight
                                                                     multiplier:1
                                                                       constant:0]];
         

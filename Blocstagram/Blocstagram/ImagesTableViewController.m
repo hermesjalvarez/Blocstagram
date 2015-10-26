@@ -143,27 +143,10 @@
     
     UINavigationController *fsNavViewController = [[UINavigationController alloc] initWithRootViewController:fullScreenVC];
     
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Share"
-                                    style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(shareAlert:)];
-    
-    fullScreenVC.navigationItem.rightBarButtonItem = shareButton;
-    
     fsNavViewController.transitioningDelegate = self;
     fsNavViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self presentViewController:fsNavViewController animated:YES completion:nil];
-}
-
-//share button (can't get it to work)
-- (IBAction)shareAlert:(id)sender {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithObjects:self.lastTappedImageView, nil];
-    
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
-    
-    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 //not always needed when cells have same size
@@ -184,19 +167,40 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
-    
-}
+// IDEA 1
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//	[self infiniteScrollIfNecessary];
+//
+//	if (scrollView.dragging) return;
+//	[self processVisibleCells];
+//}
+//- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+//
+//	if (scrollView.decelerationRate > UIScrollViewDecelerationRateNormal) return;
+//	[self processVisibleCells];
+//}
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
-//    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:<#(UITableViewRowAnimation)#>]
-}
-
-// #4
+//	IDEA 2
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self infiniteScrollIfNecessary];
+	[self infiniteScrollIfNecessary];
+
+	if (scrollView.dragging) return;
+	[self processVisibleCells];
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+	[self processVisibleCells];
+}
+
+//	Used in all IDEA cases
+- (void)processVisibleCells {
+
+	NSArray *arr = [self.tableView indexPathsForVisibleRows];
+	[arr enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
+		Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+		if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+			[[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+		}
+	}];
 }
 
 //long press sharing
