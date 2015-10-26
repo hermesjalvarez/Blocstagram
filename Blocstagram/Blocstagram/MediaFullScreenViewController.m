@@ -16,6 +16,10 @@
     self = [super init];
     
     if (self) {
+        //	this prevents UIKit to automatically moves our centered imageview down, in the scroll view
+        //	that's useful for table/collection views, but not for this case
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        
         self.media = media;
     }
     
