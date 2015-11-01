@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50446611C51ADF10837C0ABC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CEF8958CB6B257B75E3160E /* libPods.a */; };
+		A10DB00B1BE6AAFC00F6F0EB /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A10DB00A1BE6AAFC00F6F0EB /* PostToInstagramViewController.m */; };
 		A13BD4B51BC9CC9E00D36F0F /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4AB1BC9CC9E00D36F0F /* 1.jpg */; };
 		A13BD4B61BC9CC9E00D36F0F /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4AC1BC9CC9E00D36F0F /* 2.jpg */; };
 		A13BD4B71BC9CC9E00D36F0F /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4AD1BC9CC9E00D36F0F /* 3.jpg */; };
@@ -58,6 +59,8 @@
 		110E00406E6ADC4D871493EA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2A6B275D4788D41C4EC1D17D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5CEF8958CB6B257B75E3160E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10DB0091BE6AAFC00F6F0EB /* PostToInstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostToInstagramViewController.h; sourceTree = "<group>"; };
+		A10DB00A1BE6AAFC00F6F0EB /* PostToInstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostToInstagramViewController.m; sourceTree = "<group>"; };
 		A13BD4AB1BC9CC9E00D36F0F /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		A13BD4AC1BC9CC9E00D36F0F /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		A13BD4AD1BC9CC9E00D36F0F /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 				A1E3282F1BE509A50081F2AE /* CropImageViewController.m */,
 				A1E328311BE50A930081F2AE /* ImageLibraryViewController.h */,
 				A1E328321BE50A930081F2AE /* ImageLibraryViewController.m */,
+				A10DB0091BE6AAFC00F6F0EB /* PostToInstagramViewController.h */,
+				A10DB00A1BE6AAFC00F6F0EB /* PostToInstagramViewController.m */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -446,6 +451,7 @@
 				A1E328301BE509A50081F2AE /* CropImageViewController.m in Sources */,
 				A1AF6BDC1BC9C498006D1C45 /* main.m in Sources */,
 				A1E3280F1BD88AA40081F2AE /* LikeButton.m in Sources */,
+				A10DB00B1BE6AAFC00F6F0EB /* PostToInstagramViewController.m in Sources */,
 				A1E3280C1BD889EE0081F2AE /* CircleSpinnerView.m in Sources */,
 				A13BD4C11BC9CE8600D36F0F /* ImagesTableViewController.m in Sources */,
 				A1E3282D1BE507140081F2AE /* CropBox.m in Sources */,
