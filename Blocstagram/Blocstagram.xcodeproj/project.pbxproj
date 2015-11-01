@@ -30,18 +30,18 @@
 		A1AF6BE71BC9C499006D1C45 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1AF6BE61BC9C499006D1C45 /* Images.xcassets */; };
 		A1AF6BEA1BC9C499006D1C45 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1AF6BE81BC9C499006D1C45 /* LaunchScreen.xib */; };
 		A1AF6BF61BC9C499006D1C45 /* BlocstagramTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1AF6BF51BC9C499006D1C45 /* BlocstagramTests.m */; };
-		A1C79A771BD4466900DEA65F /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C79A761BD4466900DEA65F /* MediaFullScreenViewController.m */; settings = {ASSET_TAGS = (); }; };
-		A1E328091BD871800081F2AE /* MediaFullScreenAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328081BD871800081F2AE /* MediaFullScreenAnimator.m */; settings = {ASSET_TAGS = (); }; };
-		A1E3280C1BD889EE0081F2AE /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3280B1BD889EE0081F2AE /* CircleSpinnerView.m */; settings = {ASSET_TAGS = (); }; };
-		A1E3280F1BD88AA40081F2AE /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3280E1BD88AA40081F2AE /* LikeButton.m */; settings = {ASSET_TAGS = (); }; };
-		A1E3281E1BDC6B230081F2AE /* LikesLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3281D1BDC6B230081F2AE /* LikesLabelView.m */; settings = {ASSET_TAGS = (); }; };
-		A1E328211BDD56F60081F2AE /* ComposeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328201BDD56F60081F2AE /* ComposeCommentView.m */; settings = {ASSET_TAGS = (); }; };
-		A1E328241BDD689F0081F2AE /* CameraToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328231BDD689F0081F2AE /* CameraToolbar.m */; settings = {ASSET_TAGS = (); }; };
-		A1E328271BDD69B90081F2AE /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328261BDD69B90081F2AE /* CameraViewController.m */; settings = {ASSET_TAGS = (); }; };
-		A1E3282A1BDD6BBF0081F2AE /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328291BDD6BBF0081F2AE /* UIImage+ImageUtilities.m */; settings = {ASSET_TAGS = (); }; };
-		A1E3282D1BE507140081F2AE /* CropBox.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3282C1BE507140081F2AE /* CropBox.m */; settings = {ASSET_TAGS = (); }; };
-		A1E328301BE509A50081F2AE /* CropImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3282F1BE509A50081F2AE /* CropImageViewController.m */; settings = {ASSET_TAGS = (); }; };
-		A1E328331BE50A930081F2AE /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328321BE50A930081F2AE /* ImageLibraryViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A1C79A771BD4466900DEA65F /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C79A761BD4466900DEA65F /* MediaFullScreenViewController.m */; };
+		A1E328091BD871800081F2AE /* MediaFullScreenAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328081BD871800081F2AE /* MediaFullScreenAnimator.m */; };
+		A1E3280C1BD889EE0081F2AE /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3280B1BD889EE0081F2AE /* CircleSpinnerView.m */; };
+		A1E3280F1BD88AA40081F2AE /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3280E1BD88AA40081F2AE /* LikeButton.m */; };
+		A1E3281E1BDC6B230081F2AE /* LikesLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3281D1BDC6B230081F2AE /* LikesLabelView.m */; };
+		A1E328211BDD56F60081F2AE /* ComposeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328201BDD56F60081F2AE /* ComposeCommentView.m */; };
+		A1E328241BDD689F0081F2AE /* CameraToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328231BDD689F0081F2AE /* CameraToolbar.m */; };
+		A1E328271BDD69B90081F2AE /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328261BDD69B90081F2AE /* CameraViewController.m */; };
+		A1E3282A1BDD6BBF0081F2AE /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328291BDD6BBF0081F2AE /* UIImage+ImageUtilities.m */; };
+		A1E3282D1BE507140081F2AE /* CropBox.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3282C1BE507140081F2AE /* CropBox.m */; };
+		A1E328301BE509A50081F2AE /* CropImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E3282F1BE509A50081F2AE /* CropImageViewController.m */; };
+		A1E328331BE50A930081F2AE /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E328321BE50A930081F2AE /* ImageLibraryViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,7 +315,7 @@
 		A1AF6BCE1BC9C498006D1C45 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Hermes Alvarez";
 				TargetAttributes = {
 					A1AF6BD51BC9C498006D1C45 = {
@@ -502,6 +502,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -567,6 +568,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Blocstagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hermesalvarez.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -578,6 +580,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Blocstagram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hermesalvarez.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -596,6 +599,7 @@
 				);
 				INFOPLIST_FILE = BlocstagramTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hermesalvarez.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Blocstagram.app/Blocstagram";
 			};
@@ -611,6 +615,7 @@
 				);
 				INFOPLIST_FILE = BlocstagramTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hermesalvarez.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Blocstagram.app/Blocstagram";
 			};
