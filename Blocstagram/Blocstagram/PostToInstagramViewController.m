@@ -192,6 +192,28 @@
 - (void) addFiltersToQueue {
     CIImage *sourceCIImage = [CIImage imageWithCGImage:self.sourceImage.CGImage];
     
+    // Mono filter
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *monoFilter = [CIFilter filterWithName:@"CIPhotoEffectMono"];
+        
+        if (monoFilter) {
+            [monoFilter setValue:sourceCIImage forKey:kCIInputImageKey];
+            [self addCIImageToCollectionView:monoFilter.outputImage withFilterTitle:NSLocalizedString(@"Mono", @"Mono Filter")];
+        }
+    }];
+    
+    // Chrome filter
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *chromeFilter = [CIFilter filterWithName:@"CIPhotoEffectChrome"];
+        
+        if (chromeFilter) {
+            [chromeFilter setValue:sourceCIImage forKey:kCIInputImageKey];
+            [self addCIImageToCollectionView:chromeFilter.outputImage withFilterTitle:NSLocalizedString(@"Chrome", @"Chrome Filter")];
+        }
+    }];
+    
     // Noir filter
     
     [self.photoFilterOperationQueue addOperationWithBlock:^{
