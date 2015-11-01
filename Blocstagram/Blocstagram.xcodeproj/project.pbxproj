@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		50446611C51ADF10837C0ABC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CEF8958CB6B257B75E3160E /* libPods.a */; };
 		A10DB00B1BE6AAFC00F6F0EB /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A10DB00A1BE6AAFC00F6F0EB /* PostToInstagramViewController.m */; };
+		A10DB00D1BE6C11300F6F0EB /* UserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A10DB00C1BE6C11300F6F0EB /* UserTests.m */; };
+		A10DB00F1BE6C25800F6F0EB /* MediaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A10DB00E1BE6C25800F6F0EB /* MediaTests.m */; };
 		A13BD4B51BC9CC9E00D36F0F /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4AB1BC9CC9E00D36F0F /* 1.jpg */; };
 		A13BD4B61BC9CC9E00D36F0F /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4AC1BC9CC9E00D36F0F /* 2.jpg */; };
 		A13BD4B71BC9CC9E00D36F0F /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A13BD4AD1BC9CC9E00D36F0F /* 3.jpg */; };
@@ -61,6 +63,8 @@
 		5CEF8958CB6B257B75E3160E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10DB0091BE6AAFC00F6F0EB /* PostToInstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostToInstagramViewController.h; sourceTree = "<group>"; };
 		A10DB00A1BE6AAFC00F6F0EB /* PostToInstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostToInstagramViewController.m; sourceTree = "<group>"; };
+		A10DB00C1BE6C11300F6F0EB /* UserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTests.m; sourceTree = "<group>"; };
+		A10DB00E1BE6C25800F6F0EB /* MediaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTests.m; sourceTree = "<group>"; };
 		A13BD4AB1BC9CC9E00D36F0F /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		A13BD4AC1BC9CC9E00D36F0F /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		A13BD4AD1BC9CC9E00D36F0F /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -151,8 +155,8 @@
 		A1AF6BCD1BC9C498006D1C45 = {
 			isa = PBXGroup;
 			children = (
-				A1AF6BD81BC9C498006D1C45 /* Blocstagram */,
 				A1AF6BF21BC9C499006D1C45 /* BlocstagramTests */,
+				A1AF6BD81BC9C498006D1C45 /* Blocstagram */,
 				A1AF6BD71BC9C498006D1C45 /* Products */,
 				E100487E31B2580E23E18AB7 /* Pods */,
 				89C1EAA0017ABC1D7E3F7871 /* Frameworks */,
@@ -235,6 +239,8 @@
 			children = (
 				A1AF6BF51BC9C499006D1C45 /* BlocstagramTests.m */,
 				A1AF6BF31BC9C499006D1C45 /* Supporting Files */,
+				A10DB00C1BE6C11300F6F0EB /* UserTests.m */,
+				A10DB00E1BE6C25800F6F0EB /* MediaTests.m */,
 			);
 			path = BlocstagramTests;
 			sourceTree = "<group>";
@@ -462,6 +468,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10DB00F1BE6C25800F6F0EB /* MediaTests.m in Sources */,
+				A10DB00D1BE6C11300F6F0EB /* UserTests.m in Sources */,
 				A1AF6BF61BC9C499006D1C45 /* BlocstagramTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
