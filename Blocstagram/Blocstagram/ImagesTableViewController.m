@@ -168,8 +168,19 @@
     
     UINavigationController *fsNavViewController = [[UINavigationController alloc] initWithRootViewController:fullScreenVC];
     
-    fsNavViewController.transitioningDelegate = self;
-    fsNavViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+//    fsNavViewController.transitioningDelegate = self;
+//    fsNavViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        fsNavViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    } else {
+        fsNavViewController.transitioningDelegate = self;
+        fsNavViewController.modalPresentationStyle = UIModalPresentationCustom;
+    }
+    
+    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        fsNavViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
     
     [self presentViewController:fsNavViewController animated:YES completion:nil];
 }
@@ -177,7 +188,7 @@
 //not always needed when cells have same size
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Media *item = [self items][indexPath.row];
-    return [MediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)];
+    return [MediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame) traitCollection:self.view.traitCollection];
 }
 
 - (void) infiniteScrollIfNecessary {
@@ -402,6 +413,11 @@
     
     if (imageVC) {
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:imageVC];
+        
+        nav.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverController = nav.popoverPresentationController;
+        popoverController.barButtonItem = sender;
+        
         [self presentViewController:nav animated:YES completion:nil];
     }
     
